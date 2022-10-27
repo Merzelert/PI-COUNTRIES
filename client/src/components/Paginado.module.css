@@ -1,0 +1,23 @@
+li {
+    padding: 0px;
+}
+ul {
+	padding: 0px;
+}
+
+.paginado {
+    margin-top: 30px;
+    display: flex;
+    list-style-type: none;
+    justify-content: space-evenly;   
+}
+
+.paginado a {
+    text-decoration: none;
+}
+
+.paginado a:hover {
+    transform: translateY(-0px);
+    box-shadow: 10px 12px 15px blue;
+    cursor: pointer;
+}

@@ -19,10 +19,31 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
+const { Country } = require('./src/db');
+const axios = require('axios');
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
-  server.listen(3001, () => {
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
-  });
+
+    server.listen(3001, async () => {
+        const allCountries = Country.findAll();
+        if (!allCountries.length) {
+            const apiCountriesResponse = await axios.get('https://restcountries.com/v3/all');
+            let apiCountries = apiCountriesResponse.data.map((e) => {
+                return {
+                    id: e.cca3,
+                    nombre: e.name.common,
+                    imagenBandera: e.flags[0],
+                    continente: e.continents[0],
+                    capital: e.capital ? e.capital[0] : 'Not found',
+                    subregion: e.subregion,
+                    area: e.area,
+                    poblacion: e.population
+                }
+            })
+            await Country.bulkCreate(apiCountries);
+            console.log('bbd creada')
+        }
+        console.log('%s listening at 3001'); // eslint-disable-line no-console
+    });
 });

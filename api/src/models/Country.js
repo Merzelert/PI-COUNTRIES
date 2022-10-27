@@ -5,23 +5,20 @@ module.exports = (sequelize) => {
     // defino el modelo pais e
     sequelize.define('country', {
         id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+            type: DataTypes.STRING(3),
+            primaryKey: true,
+            unique: true,
             allowNull: false,
-            primaryKey: true
         },
-        idName: {
-            type: DataTypes.STRING,
-        },
-        name: {
+        nombre: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        image: {
+        imagenBandera: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        continent: {
+        continente: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -31,16 +28,15 @@ module.exports = (sequelize) => {
         },
         subregion: {
             type: DataTypes.STRING,
-            allowNull: true,
         },
         area: {
             type: DataTypes.INTEGER,
-            allowNull: true,
         },
-        population: {
+        poblacion: {
             type: DataTypes.INTEGER,
-            allowNull: true,
-        }
+        },
+    }, {
+        timestamps: false,
     });
 };
 
