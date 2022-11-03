@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-export function getCountries(){
+export function getCountries(){ //aqui es donde sucede toda la conexion entre el front y el back
     return async function(dispatch){
-        let json = await axios.get('http://localhost:3001/countries', {
-
-        });
+        let json = await axios.get('http://localhost:3001/countries');//axios por default nos da un get
         return dispatch({
             type: 'GET_COUNTRIES',
             payload: json.data
@@ -29,9 +27,7 @@ export function filterCountriesByContinent(payload){
 
 export function getActivities(){
     return async function (dispatch){
-        const respuesta = await axios.get('http://localhost:3001/activities', {
-
-        });
+        const respuesta = await axios.get('http://localhost:3001/activities');
         return dispatch({
             type: 'GET_ACTIVITIES',
             payload: respuesta.data

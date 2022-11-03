@@ -24,10 +24,10 @@ const axios = require('axios');
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
-
+// Aqui pido la informacion de la API y la guardo en la Base de datos con bulkCreate para posteriormente trabajar con esa informacion directamente desde la bs
     server.listen(3001, async () => {
-        const allCountries = Country.findAll();
-        if (!allCountries.length) {
+        const allCountries = Country.findAll();//buscar todos los paises en la bd
+        if (!allCountries.length) { // si esta vacio se hace la busqueda y se crea la bd
             const apiCountriesResponse = await axios.get('https://restcountries.com/v3/all');
             let apiCountries = apiCountriesResponse.data.map((e) => {
                 return {
@@ -41,8 +41,8 @@ conn.sync({ force: true }).then(() => {
                     poblacion: e.population
                 }
             })
-            await Country.bulkCreate(apiCountries);
-            console.log('bbd creada')
+            await Country.bulkCreate(apiCountries);//le paso el array con el objeto de la informacion requerida y llena los campos conforme al modelo en la bd
+            console.log('Base de datos creada')
         }
         console.log('%s listening at 3001'); // eslint-disable-line no-console
     });

@@ -6,9 +6,11 @@ import styles from './NewActivity.module.css'
 
 export function validate(input) {
     let error = {};
+
     if (!input.nombre) {
         error.nombre = "El nombre es requerido"
-    } else if (/[0-9]/.test(input.nombre)) {
+    } else if (!/^[a-zA-Z\s]*$/.test(input.nombre) ||
+        typeof input.nombre !== "string") {
         error.nombre = "Nombre invalido"
     }
 
@@ -42,6 +44,10 @@ export const NewActivity = () => {
     const history = useHistory()
     const countries = useSelector((state) => state.countries)
     const [error, setError] = useState({})
+    // eslint-disable-next-line no-unused-vars
+    const [errorButton, setErrorButton] = useState(
+        Object.values(error).length !== 0 ? true : false
+    );
     const [input, setInput] = useState({
         "nombre": "",
         "dificultad": "",
@@ -62,14 +68,14 @@ export const NewActivity = () => {
     }
 
     function handleCheck(e) {
-            setInput({
-                ...input,
-                temporada: e.target.value
-            })
-            setError(validate({
-                ...input,
-                temporada: e.target.value
-            }))
+        setInput({
+            ...input,
+            temporada: e.target.value
+        })
+        setError(validate({
+            ...input,
+            temporada: e.target.value
+        }))
     }
 
     function handleSelect(e) {
@@ -85,7 +91,6 @@ export const NewActivity = () => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(input);
         dispatch(postActivities(input))
         alert('Actividad creada!!!')
         setInput({
@@ -113,21 +118,22 @@ export const NewActivity = () => {
     return (
         <div className={styles.prevBtn}>
             <div>
-            <Link to='/home'>
-                <button>Volver</button>
-            </Link>
+                <Link to='/home'>
+                    <button>Volver</button>
+                </Link>
             </div>
 
             <h1>Crea tu actividad</h1>
 
             <form className={styles.formStyle} onSubmit={(e) => handleSubmit(e)}>
                 <div>
-                    <label>Nombre de la actividad </label>
+                    <label>Nombre de la actividad</label>
                     <input
                         type="text"
                         value={input.nombre}
                         name="nombre"
                         onChange={(e) => handleChange(e)}
+                        placeholder="Actividad"
                     />
                     {
                         error.nombre && (
@@ -137,12 +143,13 @@ export const NewActivity = () => {
                 </div>
 
                 <div>
-                    <label>Dificultad </label>
+                    <label>Dificultad</label>
                     <input
                         type="number"
                         value={input.dificultad}
                         name="dificultad"
                         onChange={(e) => handleChange(e)}
+                        placeholder="Entre 1 y 5"
                     />
                     {
                         error.dificultad && (
@@ -152,12 +159,13 @@ export const NewActivity = () => {
                 </div>
 
                 <div>
-                    <label>Duracion en horas</label>
+                    <label>Duracion</label>
                     <input
                         type="number"
                         value={input.duracion}
                         name="duracion"
                         onChange={(e) => handleChange(e)}
+                        placeholder="En horas"
                     />
                     {
                         error.duracion && (
@@ -166,7 +174,7 @@ export const NewActivity = () => {
                     }
                 </div>
 
-                <div>
+                <div  className={styles.selectSeason}>
                     <label>Temporada estacional</label>
                     {/* "verano", "otoño", "primavera", "invierno" */}
                     <select onChange={(e) => handleCheck(e)}>
@@ -179,19 +187,19 @@ export const NewActivity = () => {
                         <option
                             name="otoño"
                             value="otoño"
-                        >otoño
+                        >Otoño
                         </option>
 
                         <option
                             name="primavera"
                             value="primavera"
-                        >primavera
+                        >Primavera
                         </option>
 
                         <option
                             name="invierno"
                             value="invierno"
-                        >invierno
+                        >Invierno
                         </option>
                     </select>
                     {
@@ -205,7 +213,7 @@ export const NewActivity = () => {
                     <label>Pais con esa actividad</label>
                     <select onChange={(e) => handleSelect(e)}>
                         {countries.map((pais) => (
-                            <option value={pais.id}>{pais.nombre}</option>
+                            <option value={pais.id} key={pais.id}>{pais.nombre}</option>
                         ))}
                     </select>
                     {
@@ -214,8 +222,11 @@ export const NewActivity = () => {
                         )
                     }
                 </div>
-
-                <button className={styles.nextBtn} type='submit'>Crear Actividad</button>
+                <button
+                    type="submit" className={styles.nextBtn}
+                    disabled={Object.values(error).length !== 0 ? true : false}>
+                    Crear Actividad
+                </button>
             </form>
             {input.idpais.map(el =>
                 <div className={styles.borrarPais}>

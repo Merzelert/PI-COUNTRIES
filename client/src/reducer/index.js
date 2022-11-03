@@ -1,4 +1,4 @@
-const initialState = {
+const initialState = { //estados iniciales
     countries: [],
     detail:[],
     allCountries: [],

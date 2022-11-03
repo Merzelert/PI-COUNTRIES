@@ -7,7 +7,6 @@ import styles from './Detail.module.css'
 export const Detail = (props) => {
     const dispatch = useDispatch();
 
-
     useEffect(() => {
         dispatch(getDetail(props.match.params.id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -21,21 +20,20 @@ export const Detail = (props) => {
                 <button>Volver...</button>
             </Link>
             <div>
-                <img className={styles.detailImage} src={country.imagenBandera} alt="bandera" />
-            
+                <img className={styles.detailImage} src={country.imagenBandera} alt="bandera" />   
             </div>
-            
             <div>
                 <div className={styles.textDetails}>
                     <h2>{country.nombre} - {country.id}</h2>
-                    <h5>Habitantes: {country.poblacion} millones</h5>
-                    <h5>Capital: {country.capital}</h5>
-                    <h5>Subregion: {country.subregion}</h5>
-                    <h5>Area: {country.area} kilometros</h5>
-                    <h2>Actividades Creadas: {country.activities?.map(a =>
+                    <h5>👥 Habitantes: {country.poblacion} millones</h5>
+                    <h5>✨ Capital: {country.capital}</h5>
+                    <h5>🌎 Subregion: {country.subregion}</h5>
+                    <h5>🧩 Area: {country.area} kilometros</h5>
+                    <h2>Actividades Creadas ⛷🏂🏄🏊🚴🧗: {country.activities?.map(a =>
                     (
-                        <div className={styles.textActDet}>
-                            <h5>Nombre : {a.nombre}</h5>
+                        <div className={styles.textActDet} key={a.id}>
+                            <p></p>
+                            <h5>🏁 Nombre : {a.nombre}</h5>
                             <h5>Dificultad : {a.dificultad}</h5>
                             <h5>Duracion : {a.duracion} horas</h5>
                             <h5>Estacion : {a.temporada}</h5>

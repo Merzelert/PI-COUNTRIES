@@ -8,23 +8,23 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING(3),
             primaryKey: true,
             unique: true,
-            allowNull: false,
+            allowNull: false, // no se permite el campo vacio, es requerido  
         },
         nombre: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false, // no se permite el campo vacio, es requerido 
         },
         imagenBandera: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false, // no se permite el campo vacio, es requerido 
         },
         continente: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false, // no se permite el campo vacio, es requerido 
         },
         capital: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false, // no se permite el campo vacio, es requerido 
         },
         subregion: {
             type: DataTypes.STRING,

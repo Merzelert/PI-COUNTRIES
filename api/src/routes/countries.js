@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
                 },
                 include: Activity  //include para hacer el join de las tablas
             })
-            return countries ? res.json(countries) : res.sendStatus(404)
+            return countries ? res.status(200).json(countries) : res.status(404).send("Pais no encontrado")
         }
         else {
             const allCountries = await Country.findAll({
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
             return res.status(200).json(allCountries);
         }
     } catch (error) {
-        res.send(error)
+        res.status(404).send(error)
     }
 })
 
@@ -33,9 +33,9 @@ router.get('/:idpais', async (req, res) => {
         const country = await Country.findByPk(idpais, {
             include: Activity
         });
-        res.json(country || 'pais no encontrado')
+        res.status(200).json(country || 'pais no encontrado')
     } catch (error) {
-        res.send(error)
+        res.status(404).send(error)
     }
 })
 

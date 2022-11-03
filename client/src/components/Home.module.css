@@ -1,5 +1,5 @@
 .main{
-    margin: 2rem 2rem;
+    margin: 1rem 2rem;
     display: grid;
     grid-template-columns: repeat(auto-fill, 200px);
     gap: 40px;
@@ -7,8 +7,19 @@
     justify-content: center;
 }
 
+.nav{
+    display: flex;
+    justify-content:space-evenly;
+    align-items: center;
+    margin-top: 20px;
+}
+
 .filtros {
     padding: 2rem;
+}
+
+.home {
+    margin-bottom: 30px;
 }
 
 .home h2 {
