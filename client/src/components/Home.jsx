@@ -9,6 +9,7 @@ import { Paginado } from './Paginado';
 import { SearchBar } from './SearchBar';
 import { Footer } from './Footer';
 
+
 // Comienzo
 export const Home = () => {
 
@@ -19,18 +20,27 @@ export const Home = () => {
 
     //paginado
     const [currentPage, setCurrentPage] = useState(1) //estado local
-    const [countriesPerPage, setCountriesPerPage] = useState(9)
+    const [countriesPerPage, setCountriesPerPage] = useState(10)
+    const [paginaPrincipal, setPaginaPrincipal] = useState(9)
     const [orden, setOrden] = useState('')
-    const indexOfLastCountry = currentPage * countriesPerPage // 9
+    const indexOfLastCountry = currentPage * countriesPerPage // 10
     const indexOfFirstCountry = indexOfLastCountry - countriesPerPage// 0
     const currentCountries = allCountries.slice(indexOfFirstCountry, indexOfLastCountry)
+
+    const paginaUno = (countriesPerPage) => {
+        if (currentPage === 1){
+            countriesPerPage = countriesPerPage + 1
+        } else {
+            return countriesPerPage
+        }
+    }
 
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber)
     }
 
     useEffect(() => {//nos treaemos del estado los paises cuando el componente se monta
-        setIsLoading(true)
+        setIsLoading(true) //loading si no tenemos respuesta de la API o respuesta lenta
         dispatch(getCountries());
         setIsLoading(false)
     }, [dispatch])
@@ -40,12 +50,13 @@ export const Home = () => {
     }, [dispatch])
 
     if (isLoading) {
-        return <div>Loading...</div>
+        return <div>Cargando...</div>
     }
 
     function handleClick(e) { // para resetear todos los paises
         e.preventDefault();//para que no se recargue la pagina de forma inesperada
         dispatch(getCountries())
+        dispatch(getActivities())
         setCurrentPage(1);
     }
 
@@ -54,20 +65,20 @@ export const Home = () => {
         setCurrentPage(1);
     }
 
-    function handleFilterActivity(e) {
+    function handleFilterActivity(e) {// cuando se modifique el filtro por actividad se ejecutara esta funcion
         e.preventDefault();
         dispatch(filterActivityCreated(e.target.value))
         setCurrentPage(1);
     }
 
-    function handleSort(e) {
+    function handleSort(e) {// cuando se modifique el filtro por orden de A-Z y Z-A
         e.preventDefault();
         dispatch(orderByName(e.target.value))
         setCurrentPage(1);
         setOrden(`Ordenado ${e.target.value}`)
     }
 
-    function handleSortPop(e) {
+    function handleSortPop(e) { // cuando se modifique el filtro por orden de poblacion
         e.preventDefault();
         dispatch(orderPopulation(e.target.value))
         setCurrentPage(1);
@@ -84,8 +95,9 @@ export const Home = () => {
                 <div>
                     <SearchBar />
                 </div>
-                <button>Log Out</button>
+                <button>Sign Out</button>
             </div>
+
             <div className={styles.filtros}>
                 <span>Orden Alfabetico</span>
                 <select onChange={e => handleSort(e)}>
@@ -117,12 +129,13 @@ export const Home = () => {
                     ))}
                 </select>
             </div>
-            <Link to='/activities'>Crear actividad</Link>
+            <Link to='/activities'><button>🏊 Crear actividad 🚴</button></Link>
             <div>
                 <Paginado
                     countriesPerPage={countriesPerPage}
                     allCountries={allCountries.length}
                     paginado={paginado}
+                    paginaUno= {paginaUno}
                 />
             </div>
             <div className={styles.main}>

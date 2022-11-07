@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
 import styles from './Paginado.module.css'
-export const Paginado = ({ countriesPerPage, allCountries, paginado }) => {
+export const Paginado = ({ countriesPerPage, allCountries, paginado, paginaUno }) => {
 
     const pageNumbers = []
         for (let i = 1; i <= Math.ceil(allCountries/countriesPerPage); i++){ //Redondear todos los paies entre la cantidad de paises que quiero por pagina

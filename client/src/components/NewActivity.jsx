@@ -123,7 +123,7 @@ export const NewActivity = () => {
                 </Link>
             </div>
 
-            <h1>Crea tu actividad</h1>
+            <h1>⛷ 🏂 🏄 Crea tu actividad 🏊 🚴 🧗</h1>
 
             <form className={styles.formStyle} onSubmit={(e) => handleSubmit(e)}>
                 <div>
@@ -229,7 +229,7 @@ export const NewActivity = () => {
                 </button>
             </form>
             {input.idpais.map(el =>
-                <div className={styles.borrarPais}>
+                <div key={el} className={styles.borrarPais}>
                     <p>Pais agregado: {el}</p>
                     <button onClick={() => handleDelete(el)}>Eliminar</button>
                 </div>

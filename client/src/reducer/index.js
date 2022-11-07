@@ -1,7 +1,7 @@
 const initialState = { //estados iniciales
     countries: [],
     detail:[],
-    allCountries: [],
+    allCountries: [], //copia del estado con todos los paises para tenerlo de reserva durante los filtrados
     activities: [],
     allActivities: []
 }

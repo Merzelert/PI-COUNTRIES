@@ -14,6 +14,11 @@ ul {
 
 .paginado a {
     text-decoration: none;
+    background-color: black;
+    color: white;
+    border-radius: 4px;
+    padding: 2px;
+    margin: 1px;
 }
 
 .paginado a:hover {
